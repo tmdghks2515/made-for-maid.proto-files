@@ -1,0 +1,41 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group = 'io.madeformaid'
+version = '0.0.1-SNAPSHOT'
+
+task sourceJar(type: Jar) {
+    from("src/main/proto")
+    archiveClassifier.set("sources")
+}
+
+java {
+    withSourcesJar() // src/main/proto 포함
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifactId = 'proto-files'
+
+            // proto 파일도 sourcesJar에 포함되도록 설정 필요
+            artifact(sourceJar) {
+                classifier = 'sources'
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/tmdghks2515/made-for-maid.proto-files")
+            credentials {
+                username = project.findProperty("gpr.user") ?: ""
+                password = project.findProperty("gpr.key") ?: ""
+            }
+        }
+    }
+}
