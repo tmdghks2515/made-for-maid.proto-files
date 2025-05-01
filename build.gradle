@@ -15,6 +15,16 @@ java {
     withSourcesJar() // src/main/proto 포함
 }
 
+sourceSets {
+    main {
+        resources {
+            // .proto 파일을 resources로 간주하여 포함
+            srcDir 'src/main/proto'
+            include '**/*.proto'
+        }
+    }
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -22,9 +32,8 @@ publishing {
 
             artifactId = 'proto-files'
 
-            // proto 파일도 sourcesJar에 포함되도록 설정 필요
             artifact(sourceJar) {
-                classifier = 'sources'
+                classifier = 'proto'
             }
         }
     }
@@ -38,4 +47,8 @@ publishing {
             }
         }
     }
+}
+
+tasks.named('generateMetadataFileForMavenJavaPublication') {
+    dependsOn tasks.named('sourceJar')
 }
