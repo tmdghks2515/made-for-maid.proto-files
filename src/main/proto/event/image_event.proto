@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package event;
+
+enum UploadImageType {
+  USER_PROFILE = 0;
+  SHOP_MENU = 1;
+}
+
+message ImageUsingEvent {
+  string imageId = 1;
+  UploadImageType usedByType = 2;
+  string usedById = 3;
+}
+
+message ImageUnusingEvent {
+  string imageId = 1;
+  UploadImageType usedByType = 2;
+  string usedById = 3;
+}
