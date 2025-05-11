@@ -2,19 +2,21 @@ syntax = "proto3";
 
 package event;
 
+import "google/protobuf/timestamp.proto";
+
 enum UploadImageType {
   USER_PROFILE = 0;
   SHOP_MENU = 1;
 }
 
 message ImageUsingEvent {
-  string imageId = 1;
-  UploadImageType usedByType = 2;
-  string usedById = 3;
+  string imageId = 1; // 업로드된 이미지의 ID
+  UploadImageType usedByType = 2; // 이 이미지를 사용한 주체의 유형 (사용자 프로필, 가게 메뉴 등)
+  string usedById = 3; // 사용 주체의 고유 ID
+  google.protobuf.Timestamp eventTime = 5;
 }
 
 message ImageUnusingEvent {
   string imageId = 1;
-  UploadImageType usedByType = 2;
-  string usedById = 3;
+  google.protobuf.Timestamp eventTime = 5;
 }
