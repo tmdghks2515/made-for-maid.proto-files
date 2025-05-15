@@ -20,3 +20,11 @@ message ImageUnusingEvent {
   string imageId = 1;
   google.protobuf.Timestamp eventTime = 5;
 }
+
+message ImageUsingEvents {
+  repeated ImageUsingEvent events = 1;
+}
+
+message ImageUnusingEvents {
+  repeated ImageUnusingEvent events = 1;
+}
